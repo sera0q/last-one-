@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambright Placement Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .timer {
+            font-size: 24px;
+            font-weight: bold;
+            color: green;
+        }
+        .red {
+            color: red;
+        }
+    </style>
+    <script>
+        let timeLeft = 50 * 60;
+        function updateTimer() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById("timer").textContent = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+            if (timeLeft <= 600) {
+                document.getElementById("timer").classList.add("red");
+            }
+            if (timeLeft === 0) {
+                alert("Time's up! Submitting your test.");
+                document.getElementById("testForm").submit();
+            }
+            timeLeft--;
+        }
+        setInterval(updateTimer, 1000);
+        
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                alert("Warning: Do not switch tabs during the test!");
+            }
+        });
+
+        document.addEventListener("keydown", function(event) {
+            if (event.ctrlKey || event.shiftKey) {
+                event.preventDefault();
+                alert("Keyboard shortcuts are disabled!");
+            }
+        });
+
+        document.addEventListener("contextmenu", function(event) {
+            event.preventDefault();
+            alert("Right-click is disabled!");
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <img src="Cambright.Lan.png" alt="Cambright Logo" width="200">
+        <h1>Welcome to the Cambright Placement Test</h1>
+        <p>Our English Placement Test is designed to assess your current proficiency level and help us recommend the most suitable learning program for you.</p>
+        <h2>Time Remaining: <span id="timer">50:00</span></h2>
+        <form id="testForm" action="submit.php" method="post">
+            <!-- Questions go here -->
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
